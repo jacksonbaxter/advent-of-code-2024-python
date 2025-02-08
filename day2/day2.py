@@ -25,10 +25,21 @@ def is_safe_report(levels):
 
     return True
 
+def safe_with_removal(levels):
+    if is_safe_report(levels):
+        return True
+        
+    for i in range(len(levels)):
+        modified_level = levels[:i] + levels[i+1:]
+        if is_safe_report(modified_level):
+            return True
+            
+    return False
+
 def calculate_safe(reports):
     safe_count = 0
     for report in reports:
-        if is_safe_report(report):
+        if safe_with_removal(report):
             safe_count += 1
 
     return safe_count
