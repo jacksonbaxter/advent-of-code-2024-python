@@ -7,14 +7,21 @@ def read_input(filename):
     return input
 
 def solve_mul(input):
-    pattern = r'mul\((\d{1,3}),(\d{1,3})\)'
+    pattern = r"(mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\))"
 
-    matches = re.finditer(pattern, input)
+    matches = re.findall(pattern, "".join(input))
 
+    enabled = True
     total = 0
-    for match in matches:
-        x, y = map(int, match.groups())
-        total += x * y
+
+    for matche in matches:
+        match matche[0]:
+            case "do()":
+                enabled = True
+            case "don't()":
+                enabled = False
+            case _ if enabled:
+                total += int(matche[1]) * int(matche[2])
 
     return total
 
