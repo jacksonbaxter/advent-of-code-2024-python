@@ -37,12 +37,30 @@ def part1(input):
 
     return sum(line.count("XMAS") + line.count("SAMX") for line in lines)
 
+def part2(input):
+    rows, cols = len(input), len(input[0])
+    count = 0
+    
+    _set = {"M", "S"}
+
+    for r in range(1, rows - 1):
+        for c in range(1, cols - 1):
+            if input[r][c] == "A":
+                if {input[r - 1][c - 1], input[r + 1][c + 1]} == _set and {input[r - 1][c + 1], input[r + 1][c - 1]} == _set:
+                    count += 1
+
+    return count
+
 def main():
     input = read_input('input.txt')
 
     p1_ans = part1(input)
 
     print(f"The number of XMAS appearances is: {p1_ans}")
+
+    p2_ans = part2(input)
+
+    print(f"XMAS appears {p2_ans} times")
 
 if __name__ == "__main__":
     main()
